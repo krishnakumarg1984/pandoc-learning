@@ -1,0 +1,450 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  12pt,
+  a4paper,
+]{article}
+\usepackage{lmodern}
+\usepackage{setspace}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={PANDOC(1) Pandoc User Manuals},
+  pdfauthor={John MacFarlane},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=3cm]{geometry}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+
+\title{PANDOC(1) Pandoc User Manuals}
+\author{John MacFarlane}
+\date{January 8, 2008}
+
+\begin{document}
+\maketitle
+
+\setstretch{1.25}
+\hypertarget{name}{%
+\section{NAME}\label{name}}
+
+pandoc - general markup converter
+
+\hypertarget{synopsis}{%
+\section{SYNOPSIS}\label{synopsis}}
+
+pandoc {[}\emph{options}{]} {[}\emph{input-file}{]}\ldots{}
+
+\hypertarget{description}{%
+\section{DESCRIPTION}\label{description}}
+
+Pandoc converts files from one markup format to another. It can read markdown
+and (subsets of) reStructuredText, HTML, and LaTeX, and it can write plain
+text, markdown, reStructuredText, HTML, LaTeX, ConTeXt, Texinfo, groff man,
+MediaWiki markup, RTF, OpenDocument XML, ODT, DocBook XML, EPUB, and Slidy or
+S5 HTML slide shows.
+
+If no \emph{input-file} is specified, input is read from \emph{stdin}.
+Otherwise, the \emph{input-files} are concatenated (with a blank line between
+each) and used as input. Output goes to \emph{stdout} by default (though
+output to \emph{stdout} is disabled for the \texttt{odt} and \texttt{epub}
+output formats). For output to a file, use the \texttt{-o} option:
+
+\begin{verbatim}
+pandoc -o output.html input.txt
+\end{verbatim}
+
+Instead of a file, an absolute URI may be given. In this case pandoc will
+fetch the content using HTTP:
+
+\begin{verbatim}
+pandoc -f html -t markdown http://www.fsf.org
+\end{verbatim}
+
+The input and output formats may be specified using command-line options (see
+\textbf{OPTIONS}, below, for details). If these formats are not specified
+explicitly, Pandoc will attempt to determine them from the extensions of the
+input and output filenames. If input comes from \emph{stdin} or from a file
+with an unknown extension, the input is assumed to be markdown. If no output
+filename is specified using the \texttt{-o} option, or if a filename is
+specified but its extension is unknown, the output will default to HTML. Thus,
+for example,
+
+\begin{verbatim}
+pandoc -o chap1.tex chap1.txt
+\end{verbatim}
+
+converts \emph{chap1.txt} from markdown to LaTeX. And
+
+\begin{verbatim}
+pandoc README
+\end{verbatim}
+
+converts \emph{README} from markdown to HTML.
+
+Pandoc's version of markdown is an extended variant of standard markdown: the
+differences are described in the \emph{README} file in the user documentation.
+If standard markdown syntax is desired, the \texttt{-\/-strict} option may be
+used.
+
+Pandoc uses the UTF-8 character encoding for both input and output. If your
+local character encoding is not UTF-8, you should pipe input and output
+through \texttt{iconv}:
+
+\begin{verbatim}
+iconv -t utf-8 input.txt | pandoc | iconv -f utf-8
+\end{verbatim}
+
+\hypertarget{options}{%
+\section{OPTIONS}\label{options}}
+
+\begin{description}
+\item[-f \emph{FORMAT}, -r \emph{FORMAT}, -\/-from=\emph{FORMAT},
+-\/-read=\emph{FORMAT}]
+Specify input format. \emph{FORMAT} can be \texttt{native} (native Haskell),
+\texttt{markdown} (markdown or plain text), \texttt{rst} (reStructuredText),
+\texttt{html} (HTML), or \texttt{latex} (LaTeX). If \texttt{+lhs} is appended
+to \texttt{markdown}, \texttt{rst}, or \texttt{latex}, the input will be
+treated as literate Haskell source.
+\item[-t \emph{FORMAT}, -w \emph{FORMAT}, -\/-to=\emph{FORMAT},
+-\/-write=\emph{FORMAT}]
+Specify output format. \emph{FORMAT} can be \texttt{native} (native Haskell),
+\texttt{plain} (plain text), \texttt{markdown} (markdown), \texttt{rst}
+(reStructuredText), \texttt{html} (HTML), \texttt{latex} (LaTeX),
+\texttt{context} (ConTeXt), \texttt{man} (groff man), \texttt{mediawiki}
+(MediaWiki markup), \texttt{texinfo} (GNU Texinfo), \texttt{docbook} (DocBook
+XML), \texttt{opendocument} (OpenDocument XML), \texttt{odt} (OpenOffice text
+document), \texttt{epub} (EPUB book), \texttt{slidy} (Slidy HTML and
+javascript slide show), \texttt{s5} (S5 HTML and javascript slide show), or
+\texttt{rtf} (rich text format). Note that \texttt{odt} and \texttt{epub}
+output will not be directed to \emph{stdout}; an output filename must be
+specified using the \texttt{-o/-\/-output} option. If \texttt{+lhs} is
+appended to \texttt{markdown}, \texttt{rst}, \texttt{latex}, or \texttt{html},
+the output will be rendered as literate Haskell source.
+\item[-s, -\/-standalone]
+Produce output with an appropriate header and footer (e.g.~a standalone HTML,
+LaTeX, or RTF file, not a fragment).
+\item[-o \emph{FILE}, -\/-output=\emph{FILE}]
+Write output to \emph{FILE} instead of \emph{stdout}. If \emph{FILE} is
+`\texttt{-}', output will go to \emph{stdout}.
+\item[-p, -\/-preserve-tabs]
+Preserve tabs instead of converting them to spaces.
+\item[-\/-tab-stop=\emph{TABSTOP}]
+Specify tab stop (default is 4).
+\item[-\/-strict]
+Use strict markdown syntax, with no extensions or variants.
+\item[-\/-reference-links]
+Use reference-style links, rather than inline links, in writing markdown or
+reStructuredText.
+\item[-R, -\/-parse-raw]
+Parse untranslatable HTML codes and LaTeX environments as raw HTML or LaTeX,
+instead of ignoring them.
+\item[-S, -\/-smart]
+Use smart quotes, dashes, and ellipses. (This option is significant only when
+the input format is \texttt{markdown}. It is selected automatically when the
+output format is \texttt{latex} or \texttt{context}.)
+\item[-m\emph{URL}, -\/-latexmathml=\emph{URL}]
+Use LaTeXMathML to display embedded TeX math in HTML output. To insert a link
+to a local copy of the \texttt{LaTeXMathML.js} script, provide a \emph{URL}.
+If no \emph{URL} is provided, the contents of the script will be inserted
+directly into the HTML header.
+\item[-\/-mathml]
+Convert TeX math to MathML. In standalone mode, a small javascript will be
+inserted that allows the MathML to be viewed on some browsers.
+\item[-\/-jsmath=\emph{URL}]
+Use jsMath to display embedded TeX math in HTML output. The \emph{URL} should
+point to the jsMath load script; if provided, it will be linked to in the
+header of standalone HTML documents.
+\item[-\/-gladtex]
+Enclose TeX math in \texttt{\textless{}eq\textgreater{}} tags in HTML output.
+These can then be processed by gladTeX to produce links to images of the
+typeset formulas.
+\item[-\/-mimetex=\emph{URL}]
+Render TeX math using the mimeTeX CGI script. If \emph{URL} is not specified,
+it is assumed that the script is at \texttt{/cgi-bin/mimetex.cgi}.
+\item[-\/-webtex=\emph{URL}]
+Render TeX math using an external script. The formula will be concatenated
+with the URL provided. If \emph{URL} is not specified, the Google Chart API
+will be used.
+\item[-i, -\/-incremental]
+Make list items in Slidy or S5 display incrementally (one by one).
+\item[-\/-offline]
+Include all the CSS and javascript needed for a Slidy or S5 slide show in the
+output, so that the slide show will work even when no internet connection is
+available.
+\item[-\/-xetex]
+Create LaTeX outut suitable for processing by XeTeX.
+\item[-N, -\/-number-sections]
+Number section headings in LaTeX, ConTeXt, or HTML output. (Default is not to
+number them.)
+\item[-\/-section-divs]
+Wrap sections in \texttt{\textless{}div\textgreater{}} tags, and attach
+identifiers to the enclosing \texttt{\textless{}div\textgreater{}} rather than
+the header itself.
+\item[-\/-no-wrap]
+Disable text wrapping in output. (Default is to wrap text.)
+\item[-\/-sanitize-html]
+Sanitizes HTML (in markdown or HTML input) using a whitelist. Unsafe tags are
+replaced by HTML comments; unsafe attributes are omitted. URIs in links and
+images are also checked against a whitelist of URI schemes.
+\item[-\/-email-obfuscation=\emph{none\textbar javascript\textbar references}]
+Specify a method for obfuscating \texttt{mailto:} links in HTML documents.
+\emph{none} leaves \texttt{mailto:} links as they are. \emph{javascript}
+obfuscates them using javascript. \emph{references} obfuscates them by
+printing their letters as decimal or hexadecimal character references. If
+\texttt{-\/-strict} is specified, \emph{references} is used regardless of the
+presence of this option.
+\item[-\/-id-prefix\emph{=string}]
+Specify a prefix to be added to all automatically generated identifiers in
+HTML output. This is useful for preventing duplicate identifiers when
+generating fragments to be included in other pages.
+\item[-\/-indented-code-classes\emph{=classes}]
+Specify classes to use for indented code blocks--for example,
+\texttt{perl,numberLines} or \texttt{haskell}. Multiple classes may be
+separated by spaces or commas.
+\item[-\/-toc, -\/-table-of-contents]
+Include an automatically generated table of contents (HTML, markdown, RTF) or
+an instruction to create one (LaTeX, reStructuredText). This option has no
+effect on man, DocBook, Slidy, or S5 output.
+\item[-\/-base-header-level=\emph{LEVEL}]
+Specify the base level for headers (defaults to 1).
+\item[-\/-template=\emph{FILE}]
+Use \emph{FILE} as a custom template for the generated document. Implies
+\texttt{-s}. See TEMPLATES below for a description of template syntax. If this
+option is not used, a default template appropriate for the output format will
+be used. See also \texttt{-D/-\/-print-default-template}.
+\item[-V KEY=VAL, -\/-variable=\emph{KEY:VAL}]
+Set the template variable KEY to the value VAL when rendering the document in
+standalone mode. This is only useful when the \texttt{-\/-template} option is
+used to specify a custom template, since pandoc automatically sets the
+variables used in the default templates.
+\item[-c \emph{CSS}, -\/-css=\emph{CSS}]
+Link to a CSS style sheet. \emph{CSS} is the pathname of the style sheet.
+\item[-H \emph{FILE}, -\/-include-in-header=\emph{FILE}]
+Include contents of \emph{FILE} at the end of the header. Implies \texttt{-s}.
+\item[-B \emph{FILE}, -\/-include-before-body=\emph{FILE}]
+Include contents of \emph{FILE} at the beginning of the document body. Implies
+\texttt{-s}.
+\item[-A \emph{FILE}, -\/-include-after-body=\emph{FILE}]
+Include contents of \emph{FILE} at the end of the document body. Implies
+\texttt{-s}.
+\item[-C \emph{FILE}, -\/-custom-header=\emph{FILE}]
+Use contents of \emph{FILE} as the document header. \emph{Note: This option is
+deprecated. Users should transition to using \texttt{-\/-template} instead.}
+\item[-\/-reference-odt=\emph{filename}]
+Use the specified file as a style reference in producing an ODT. For best
+results, the reference ODT should be a modified version of an ODT produced
+using pandoc. The contents of the reference ODT are ignored, but its
+stylesheets are used in the new ODT. If no reference ODT is specified on the
+command line, pandoc will look for a file \texttt{reference.odt} in the user
+data directory (see \texttt{-\/-data-dir}). If this is not found either,
+sensible defaults will be used.
+\item[-\/-epub-stylesheet=\emph{filename}]
+Use the specified CSS file to style the EPUB. If no stylesheet is specified,
+pandoc will look for a file \texttt{epub.css} in the user data directory (see
+\texttt{-\/-data-dir}, below). If it is not found there, sensible defaults
+will be used.
+\item[-\/-epub-metadata=\emph{filename}]
+Look in the specified XML file for metadata for the EPUB. The file should
+contain a series of Dublin Core elements
+(http://dublincore.org/documents/dces/), for example:
+
+\begin{verbatim}
+ <dc:rights>Creative Commons</dc:rights>
+ <dc:language>es-AR</dc:language>
+\end{verbatim}
+
+By default, pandoc will include the following metadata elements:
+\texttt{\textless{}dc:title\textgreater{}} (from the document title),
+\texttt{\textless{}dc:creator\textgreater{}} (from the document authors),
+\texttt{\textless{}dc:language\textgreater{}} (from the locale), and
+\texttt{\textless{}dc:identifier\ id="BookId"\textgreater{}} (a randomly
+generated UUID). Any of these may be overridden by elements in the metadata
+file.
+\item[-D \emph{FORMAT}, -\/-print-default-template=\emph{FORMAT}]
+Print the default template for an output \emph{FORMAT}. (See \texttt{-t} for a
+list of possible \emph{FORMAT}s.)
+\item[-T \emph{STRING}, -\/-title-prefix=\emph{STRING}]
+Specify \emph{STRING} as a prefix to the HTML window title.
+\item[-\/-data-dir\emph{=DIRECTORY}]
+Specify the user data directory to search for pandoc data files. If this
+option is not specified, the default user data directory will be used:
+
+\begin{verbatim}
+$HOME/.pandoc
+\end{verbatim}
+
+in unix and
+
+\begin{verbatim}
+C:\Documents And Settings\USERNAME\Application Data\pandoc
+\end{verbatim}
+
+in Windows. A \texttt{reference.odt}, \texttt{epub.css}, \texttt{templates}
+directory, or \texttt{s5} directory placed in this directory will override
+pandoc's normal defaults.
+\item[-\/-dump-args]
+Print information about command-line arguments to \emph{stdout}, then exit.
+The first line of output contains the name of the output file specified with
+the \texttt{-o} option, or `\texttt{-}' (for \emph{stdout}) if no output file
+was specified. The remaining lines contain the command-line arguments, one per
+line, in the order they appear. These do not include regular Pandoc options
+and their arguments, but do include any options appearing after a
+`\texttt{-\/-}' separator at the end of the line. This option is intended
+primarily for use in wrapper scripts.
+\item[-\/-ignore-args]
+Ignore command-line arguments (for use in wrapper scripts). Regular Pandoc
+options are not ignored. Thus, for example,
+
+\begin{verbatim}
+pandoc --ignore-args -o foo.html -s foo.txt -- -e latin1
+\end{verbatim}
+
+is equivalent to
+
+\begin{verbatim}
+pandoc -o foo.html -s
+\end{verbatim}
+\item[-v, -\/-version]
+Print version.
+\item[-h, -\/-help]
+Show usage message.
+\end{description}
+
+\hypertarget{templates}{%
+\section{TEMPLATES}\label{templates}}
+
+When the \texttt{-s/-\/-standalone} option is used, pandoc uses a template to
+add header and footer material that is needed for a self-standing document. To
+see the default template that is used, just type
+
+\begin{verbatim}
+pandoc --print-default-template=FORMAT
+\end{verbatim}
+
+where \texttt{FORMAT} is the name of the output format. A custom template can
+be specified using the \texttt{-\/-template} option. You can also override the
+system default templates for a given output format \texttt{FORMAT} by putting
+a file \texttt{templates/FORMAT.template} in the user data directory (see
+\texttt{-\/-data-dir}, below).
+
+Templates may contain \emph{variables}. Variable names are sequences of
+alphanumerics, \texttt{-}, and \texttt{\_}, starting with a letter. A variable
+name surrounded by \texttt{\$} signs will be replaced by its value. For
+example, the string \texttt{\$title\$} in
+
+\begin{verbatim}
+<title>$title$</title>
+\end{verbatim}
+
+will be replaced by the document title.
+
+To write a literal \texttt{\$} in a template, use \texttt{\$\$}.
+
+Some variables are set automatically by pandoc. These vary somewhat depending
+on the output format, but include:
+
+\begin{description}
+\tightlist
+\item[\texttt{legacy-header}]
+contents specified by \texttt{-C/-\/-custom-header} \texttt{header-includes}
+
+contents specified by \texttt{-H/-\/-include-in-header} (may have multiple
+values) \texttt{toc}
+
+non-null value if \texttt{-\/-toc/-\/-table-of-contents} was specified
+\texttt{include-before}
+
+contents specified by \texttt{-B/-\/-include-before-body} (may have multiple
+values) \texttt{include-after}
+
+contents specified by \texttt{-A/-\/-include-after-body} (may have multiple
+values) \texttt{body}
+
+body of document \texttt{title}
+
+title of document, as specified in title block \texttt{author}
+
+author of document, as specified in title block (may have multiple values)
+\texttt{date}
+
+date of document, as specified in title block
+\end{description}
+
+Variables may be set at the command line using the \texttt{-V/-\/-variable}
+option. This allows users to include custom variables in their templates.
+
+Templates may contain conditionals. The syntax is as follows:
+
+\begin{verbatim}
+$if(variable)$
+X 
+$else$
+Y
+$endif$
+\end{verbatim}
+
+This will include \texttt{X} in the template if \texttt{variable} has a
+non-null value; otherwise it will include \texttt{Y}. \texttt{X} and
+\texttt{Y} are placeholders for any valid template text, and may include
+interpolated variables or other conditionals. The \texttt{\$else\$} section
+may be omitted.
+
+When variables can have multiple values (for example, \texttt{author} in a
+multi-author document), you can use the \texttt{\$for\$} keyword:
+
+\begin{verbatim}
+$for(author)$
+<meta name="author" content="$author$" />
+$endfor$
+\end{verbatim}
+
+You can optionally specify a separator to be used between consecutive items:
+
+\begin{verbatim}
+$for(author)$$author$$sep$, $endfor$
+\end{verbatim}
+
+\hypertarget{see-also}{%
+\section{SEE ALSO}\label{see-also}}
+
+\texttt{markdown2pdf} (1). The \emph{README} file distributed with Pandoc
+contains full documentation.
+
+The Pandoc source code and all documentation may be downloaded from
+\url{http://johnmacfarlane.net/pandoc/}.
+
+\end{document}
