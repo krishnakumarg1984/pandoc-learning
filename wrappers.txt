@@ -1,2 +1,6 @@
+https://github.com/vim-pandoc/vim-pandoc
+https://github.com/vim-pandoc/vim-pandoc-after
+https://github.com/vim-pandoc/vim-pandoc-syntax
 panrun
+panzer
 pdc
