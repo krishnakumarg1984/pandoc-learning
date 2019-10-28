@@ -1,0 +1,23 @@
+Some useful options
+-------------------
+--base-header-level=NUMBER
+    Specify the base level for headings (defaults to 1).
+--metadata-file=FILE
+--extract-media=DIR
+-template=FILE|URL
+    Use the specified file as a custom template for the generated document. Implies --standalone.
+--wrap=auto|none|preserve
+    Determine how text is wrapped in the output (the source code, not the rendered version). With auto (the default), pandoc will attempt to wrap lines to the column width specified by --columns (default 72). With none, pandoc will not wrap lines at all. With preserve, pandoc will attempt to preserve the wrapping from the source document (that is, where there are nonsemantic newlines in the source, there will be nonsemantic newlines in the output as well). Automatic wrapping does not currently work in HTML output. In ipynb output, this option affects wrapping of the contents of markdown cells.
+--toc-depth=NUMBER
+--strip-comments
+-H FILE, --include-in-header=FILE|URL
+    Include contents of FILE, verbatim, at the end of the header. This can be used, for example, to include special CSS or JavaScript in HTML documents. This option can be used repeatedly to include multiple files in the header. They will be included in the order specified. Implies --standalone.
+-B FILE, --include-before-body=FILE|URL
+    Include contents of FILE, verbatim, at the beginning of the document body (e.g. after the <body> tag in HTML, or the \begin{document} command in LaTeX). This can be used to include navigation bars or banners in HTML documents. This option can be used repeatedly to include multiple files. They will be included in the order specified. Implies --standalone.
+-A FILE, --include-after-body=FILE|URL
+    Include contents of FILE, verbatim, at the end of the document body (before the </body> tag in HTML, or the \end{document} command in LaTeX). This option can be used repeatedly to include multiple files. They will be included in the order specified. Implies --standalone.
+--resource-path=SEARCHPATH
+    List of paths to search for images and other resources. The paths should be separated by : on Linux, UNIX, and macOS systems, and by ; on Windows. If --resource-path is not specified, the default resource path is the working directory. Note that, if --resource-path is specified, the working directory must be explicitly listed or it will not be searched. For example: --resource-path=.:test will search the working directory and the test subdirectory, in that order.
+    --resource-path only has an effect if (a) the output format embeds images (for example, docx, pdf, or html with --self-contained) or (b) it is used together with --extract-media.
+--atx-headers
+    Use ATX-style headings in Markdown output. The default is to use setext-style headings for levels 1 to 2, and then ATX headings. 

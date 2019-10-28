@@ -1,0 +1,34 @@
+--top-level-division=[default|section|chapter|part]
+    Treat top-level headings as the given division type in LaTeX, ConTeXt, DocBook, and TEI output. The hierarchy order is part, chapter, then section; all headings are shifted such that the top-level heading becomes the specified type. The default behavior is to determine the best division type via heuristics: unless other conditions apply, section is chosen. When the LaTeX document class is set to report, book, or memoir (unless the article option is specified), chapter is implied as the setting for this option. If beamer is the output format, specifying either chapter or part will cause top-level headings to become \part{..}, while second-level headings remain as their default type
+-N, --number-sections
+    Number section headings in LaTeX, ConTeXt, HTML, or EPUB output. By default, sections are not numbered. Sections with class unnumbered will never be numbered, even if --number-sections is specified.
+--listings
+--pdf-engine=PROGRAM
+    Use the specified engine when producing PDF output. Valid values are pdflatex, lualatex, xelatex, latexmk, tectonic, wkhtmltopdf, weasyprint, prince, context, and pdfroff. The default is pdflatex.
+
+Slide-related
+-------------
+-i, --incremental
+    Make list items in slide shows display incrementally (one by one). The default is for lists to be displayed all at once.
+--slide-level=NUMBER
+    Specifies that headings with the specified level create slides (for beamer, s5, slidy, slideous, dzslides). Headings above this level in the hierarchy are used to divide the slide show into sections; headings below this level create subheads within a slide. Note that content that is not contained under slide-level headings will not appear in the slide show. The default is to set the slide level based on the contents of the document; see Structuring the slide show.
+revealjs-url
+aspectratio
+    slide aspect ratio (43 for 4:3 [default], 169 for 16:9, 1610 for 16:10, 149 for 14:9, 141 for 1.41:1, 54 for 5:4, 32 for 3:2) 
+beameroption
+    add extra beamer option with \setbeameroption{} 
+institute
+    author affiliations: can be a list when there are multiple authors 
+logo
+    logo image for slides 
+navigation
+    controls navigation symbols (default is empty for no navigation symbols; other valid values are frame, vertical, and horizontal) 
+section-titles
+    enables “title pages” for new sections (default is true) 
+theme, colortheme, fonttheme, innertheme, outertheme
+    beamer themes: 
+themeoptions
+    options for LaTeX beamer themes (a list). 
+titlegraphic
+    image for title slide 
+toc-title

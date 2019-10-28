@@ -1,0 +1,66 @@
+---
+title: 'Eating Habits'
+author: John Doe
+date: March 22, 2005
+# parallaxBackgroundImage: ./images/leaves_bg.jpg
+pandocomatic_:
+  use-template:
+    - md_to_beamer_basic_pdf
+    # - md_to_pptx_basic
+    - md_to_revealjs_with_Mathjax
+  pandoc:
+    incremental: true
+    css:
+    - reveal.js/css/theme/solarized.css
+  # metadata:
+    # theme: metropolis
+---
+
+
+# In the morning
+
+## Getting up
+
+- Turn off alarm
+- Get out of bed
+
+## Breakfast
+
+- Eat eggs
+- Drink coffee
+
+# In the evening
+
+## Dinner
+
+- Eat spaghetti
+- Drink wine
+
+------------------
+
+![picture of spaghetti](images/spaghetti.jpg)
+
+## Going to sleep
+
+- Get in bed
+- Count sheep
+
+# Conclusion
+
+- And the answer is...
+- $f(x)=\sum_{n=0}^\infty\frac{f^{(n)}(a)}{n!}(x-a)^n$    
+
+# A new title here
+
+Some super quickly created demo slides
+
+* Do not need anything else than markdown
+    * Slides title starts with # (also starts a new slide)
+    * Bullet points, newlines, empty lines: all standard markdown
+* However, can also use other stuff, e.g.:
+    * Some HTML (e.g. \<center\>)
+    * When using pandoc beamer, can use latex commands (e.g. \\center, \\large, etc)\dots
+
+# More slides
+
+\center The slide syntax is so simple that you can quickly create a handful of slides on basically any device in any editor. E.g. on your mobile on the way to the meeting where you need the slides. Right before the meeting starts you use pandoc to create the actual slides from your source.

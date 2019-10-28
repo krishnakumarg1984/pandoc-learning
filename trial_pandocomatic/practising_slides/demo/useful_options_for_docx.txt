@@ -1,0 +1,2 @@
++empty_paragraphs
+--track-changes=accept|reject|all

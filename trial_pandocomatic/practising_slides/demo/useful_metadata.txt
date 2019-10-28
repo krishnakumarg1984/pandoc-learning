@@ -1,0 +1,12 @@
+subtitle
+    document subtitle, included in HTML, EPUB, LaTeX, ConTeXt, and docx documents 
+abstract
+    document summary, included in LaTeX, ConTeXt, AsciiDoc, and docx documents 
+keywords
+    list of keywords to be included in HTML, PDF, ODT, pptx, docx and AsciiDoc metadata; repeat as for author, above 
+subject
+    document subject, included in ODT, PDF, docx and pptx metadata 
+description
+    document description, included in ODT, docx and pptx metadata. Some applications show this as Comments metadata. 
+category
+    document category, included in docx and pptx metadata 
