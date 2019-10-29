@@ -1,17 +1,17 @@
 ---
-title: 'Eating Habits'
-author: John Doe
-date: March 22, 2005
+title: 'Title slide'
+author: Peter V Coveney
+date: 2019-10-29
 # theme: Copenhagen
 # parallaxBackgroundImage: ./images/leaves_bg.jpg
 pandocomatic_:
   use-template:
     - md_to_beamer_basic_pdf
     # - md_to_pptx_basic
-    - md_to_revealjs_with_Mathjax
+    # - md_to_revealjs_with_Mathjax
   pandoc:
     incremental: true
-    slide-level: 3
+    # slide-level: 3
     # css:
     # - reveal.js/css/theme/solarized.css
   # metadata:
