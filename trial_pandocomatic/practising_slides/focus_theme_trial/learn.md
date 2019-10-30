@@ -10,6 +10,7 @@ institute: |
     | Centre for Computational Science
     | University College London
     | `p.v.coveney@ucl.ac.uk`
+toc-title: 'Contents'
 # parallaxBackgroundImage: ./images/leaves_bg.jpg
 pandocomatic_:
   use-template:
@@ -18,6 +19,8 @@ pandocomatic_:
     # - md_to_revealjs_with_Mathjax
   pandoc:
     incremental: true
+    toc: true
+    # toc-depth: 1
     slide-level: 3
     bibliography: ./demo_bibliography.bib
     # biblatex: true
@@ -27,6 +30,7 @@ pandocomatic_:
     # nocite: |
     #   @*
     csl: ./ieee.csl
+    include-in-header: ./custom_header.tex 
     # filter:
     # - pandoc-beamer-block
     # csl: ./chicago-fullnote-bibliography.csl
@@ -118,6 +122,8 @@ Enumerations:
 * Third
 :::
 ::: {.column width="33%"}
+Description:
+
 First
 
 :   Yes
